@@ -8,7 +8,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableAsync
+@EnableAsync // When you put this annotation, Spring will look for methods annotated with @Async.
 public class AppConfig implements AsyncConfigurer {
 
     @Override
