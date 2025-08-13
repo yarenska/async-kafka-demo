@@ -16,7 +16,7 @@ public class MyEventListener {
     @EventListener
     @Async
     public void listen(MyEvent event) {
-        System.out.println("🔄 Async listener received event: " + event.getPayload());
+        System.out.println("Async listener received event: " + event.getPayload());
         kafkaProducer.sendEvent(event.getPayload());
     }
 }

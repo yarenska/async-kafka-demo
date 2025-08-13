@@ -15,7 +15,7 @@ public class AsyncKafkaDemoApplication {
 	@Bean
 	public CommandLineRunner runner(MyEventPublisher publisher) {
 		CommandLineRunner runner = args -> {
-			//Creating threads to publish multiple events
+			// Creating threads to publish multiple events
 			// with the given payload in every 10 seconds
 			for(int i = 0; i < 5; i++) {
 				Thread.sleep(10000);

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyEventPublisher {
-    private ApplicationEventPublisher publisher; //Spring default, publishes the event who is listening
+    private ApplicationEventPublisher publisher; // Spring default, publishes the event who is listening
 
     public MyEventPublisher(ApplicationEventPublisher publisher) {
         this.publisher = publisher;
