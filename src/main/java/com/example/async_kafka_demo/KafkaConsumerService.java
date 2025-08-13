@@ -3,6 +3,7 @@ package com.example.async_kafka_demo;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,16 @@ public class KafkaConsumerService {
     @KafkaListener(topics = "my-event-topic", groupId = "my-consumer-group")
     public void consume(String message,
                         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-                        @Header(KafkaHeaders.OFFSET) long offset) {
-        try {
-            System.out.println("Received from Kafka = [" + message +
-                    "] from the topic = [" + topic + "] with offset = [" + offset + "]");
-        } catch (Exception e) {
-            System.out.println("Error receiving messages: "  + e.getMessage());;
+                        @Header(KafkaHeaders.OFFSET) long offset,
+                        Acknowledgment ack) {
+        System.out.println("Received from Kafka = [" + message +
+                "] from the topic = [" + topic + "] with offset = [" + offset + "]");
+        if (message.contains("FAIL")) {
+            throw new RuntimeException("Simulated processing error for message: " + message);
         }
+
+        // Only ackowledge the message if it is processed successfully
+        ack.acknowledge();
     }
 
     // An ack (acknowledgment) is a message sent by a consumer to a Kafka broker to indicate
